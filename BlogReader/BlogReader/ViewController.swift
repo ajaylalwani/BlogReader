@@ -14,6 +14,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     @IBOutlet weak var blogCollectionView: UICollectionView!
     
+    
+    let connectionHelper = ConnectionHelper();
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -21,6 +24,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidAppear(animated: Bool) {
         self.blogCollectionView.frame = self.view.bounds;
+        self.connectionHelper.downloadCategories();
         
     }
 
@@ -70,6 +74,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     //MARK: - UICollectionViewDelegateFlowLayout
     
+    /*
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
 
         let viewWidth = CGRectGetWidth(self.view.bounds);
@@ -85,6 +90,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         //return CGSizeMake(viewWidth, viewHeight);
     }
+    */
     
 }
 

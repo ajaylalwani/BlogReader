@@ -14,8 +14,11 @@
 		6E0B8E8B1BD93F260083F874 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E0B8E8A1BD93F260083F874 /* Assets.xcassets */; };
 		6E0B8E8E1BD93F260083F874 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E0B8E8C1BD93F260083F874 /* LaunchScreen.storyboard */; };
 		6E0B8E991BD93F260083F874 /* BlogReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B8E981BD93F260083F874 /* BlogReaderTests.swift */; };
-		6E0B8EA41BD9444B0083F874 /* BlogViewerCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B8EA31BD9444B0083F874 /* BlogViewerCollectionViewFlowLayout.swift */; settings = {ASSET_TAGS = (); }; };
-		6E0B8EA61BD948FE0083F874 /* BlogViewerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B8EA51BD948FE0083F874 /* BlogViewerCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
+		6E0B8EA41BD9444B0083F874 /* BlogViewerCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B8EA31BD9444B0083F874 /* BlogViewerCollectionViewFlowLayout.swift */; };
+		6E0B8EA61BD948FE0083F874 /* BlogViewerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B8EA51BD948FE0083F874 /* BlogViewerCollectionViewCell.swift */; };
+		6E7C940D1BDE71E8007CCBF7 /* ConnectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7C940C1BDE71E8007CCBF7 /* ConnectionHelper.swift */; };
+		6E7C94191BDEA735007CCBF7 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7C94181BDEA735007CCBF7 /* Category.swift */; };
+		6E7C941B1BDEAAB9007CCBF7 /* ParsingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7C941A1BDEAAB9007CCBF7 /* ParsingHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,9 @@
 		6E0B8E9A1BD93F260083F874 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E0B8EA31BD9444B0083F874 /* BlogViewerCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogViewerCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		6E0B8EA51BD948FE0083F874 /* BlogViewerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogViewerCollectionViewCell.swift; sourceTree = "<group>"; };
+		6E7C940C1BDE71E8007CCBF7 /* ConnectionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConnectionHelper.swift; path = Helpers/ConnectionHelper.swift; sourceTree = "<group>"; };
+		6E7C94181BDEA735007CCBF7 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
+		6E7C941A1BDEAAB9007CCBF7 /* ParsingHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParsingHelper.swift; path = Helpers/ParsingHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,9 @@
 		6E0B8E7F1BD93F260083F874 /* BlogReader */ = {
 			isa = PBXGroup;
 			children = (
+				6E7C94111BDE7B3F007CCBF7 /* NDHipple */,
+				6E7C940E1BDE76E3007CCBF7 /* Models */,
+				6E7C940B1BDE71D2007CCBF7 /* Helpers */,
 				6E0B8E801BD93F260083F874 /* AppDelegate.swift */,
 				6E0B8E821BD93F260083F874 /* ViewController.swift */,
 				6E0B8E841BD93F260083F874 /* Main.storyboard */,
@@ -103,6 +112,30 @@
 				6E0B8E9A1BD93F260083F874 /* Info.plist */,
 			);
 			path = BlogReaderTests;
+			sourceTree = "<group>";
+		};
+		6E7C940B1BDE71D2007CCBF7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6E7C940C1BDE71E8007CCBF7 /* ConnectionHelper.swift */,
+				6E7C941A1BDEAAB9007CCBF7 /* ParsingHelper.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		6E7C940E1BDE76E3007CCBF7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6E7C94181BDEA735007CCBF7 /* Category.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		6E7C94111BDE7B3F007CCBF7 /* NDHipple */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = NDHipple;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,9 +241,12 @@
 			files = (
 				6E0B8E831BD93F260083F874 /* ViewController.swift in Sources */,
 				6E0B8E811BD93F260083F874 /* AppDelegate.swift in Sources */,
+				6E7C941B1BDEAAB9007CCBF7 /* ParsingHelper.swift in Sources */,
 				6E0B8EA61BD948FE0083F874 /* BlogViewerCollectionViewCell.swift in Sources */,
 				6E0B8EA41BD9444B0083F874 /* BlogViewerCollectionViewFlowLayout.swift in Sources */,
 				6E0B8E891BD93F260083F874 /* BlogReader.xcdatamodeld in Sources */,
+				6E7C940D1BDE71E8007CCBF7 /* ConnectionHelper.swift in Sources */,
+				6E7C94191BDEA735007CCBF7 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +438,7 @@
 				6E0B8E9F1BD93F260083F874 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6E0B8EA01BD93F260083F874 /* Build configuration list for PBXNativeTarget "BlogReaderTests" */ = {
 			isa = XCConfigurationList;
@@ -410,6 +447,7 @@
 				6E0B8EA21BD93F260083F874 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
