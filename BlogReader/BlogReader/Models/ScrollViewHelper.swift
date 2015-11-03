@@ -53,34 +53,47 @@ class ScrollViewHelper: UIView {
         for (var i = 0; i < totalPages; i++) {
             
             if i == 0 {
-                contentView = UIView(frame: CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING), totalHeightOfContent));
+                contentView = createContentViewWithFrame(CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING), totalHeightOfContent));
                 contentView.backgroundColor = UIColor.colorForScrollViewCards;
                 
                 self.scrollView.addSubview(contentView);
                 totalElementsAdded++;
                 
             } else {
-                    contentView = UIView(frame: CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING),totalHeightOfContent/2 - CGFloat(0.5) * CGFloat(PADDING)));
+                    contentView = createContentViewWithFrame(CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING),totalHeightOfContent/2 - CGFloat(0.5) * CGFloat(PADDING)));
                     contentView.backgroundColor = UIColor.colorForScrollViewCards;
                 
                     self.scrollView.addSubview(contentView);
                 totalElementsAdded++;
                 
                 if totalElementsAdded + 1 < totalNumberOfElements  {
-                    contentView = UIView(frame: CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), totalHeightOfContent/2 + CGFloat(1.5) * CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING), totalHeightOfContent/2 - CGFloat(PADDING)));
+                    contentView = createContentViewWithFrame(CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), totalHeightOfContent/2 + CGFloat(1.5) * CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING), totalHeightOfContent/2 - CGFloat(PADDING)));
                     contentView.backgroundColor = UIColor.colorForScrollViewCards;
                     
                     self.scrollView.addSubview(contentView);
                     totalElementsAdded++;
                 }
             }
-            
-            
-            
-            
-            
-            
         }
+
+    }
+    
+    
+    func createContentViewWithFrame(frame: CGRect) -> UIView {
+        let contentView = UIView(frame: frame);
+        contentView.backgroundColor = UIColor.colorForScrollViewCards;
+        
+        // Add Image
+        let imageView = UIImageView(frame: CGRectMake(CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(frame) - CGFloat(2 * PADDING), CGRectGetHeight(frame) - CGFloat(2 * PADDING)))
+        imageView.backgroundColor = UIColor.whiteColor();
+        imageView.image = UIImage(named: "Heena");
+        imageView.contentMode = UIViewContentMode.ScaleAspectFill;
+        imageView.clipsToBounds = true;
+        
+        contentView.addSubview(imageView);
+        
+        return contentView;
+
     }
 
 }
