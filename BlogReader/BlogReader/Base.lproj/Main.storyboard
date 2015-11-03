@@ -1,25 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="i4O-HU-Pv4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2GH-X4-nQL">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Featured-->
         <scene sceneID="TQN-D6-Arf">
             <objects>
-                <viewController id="i4O-HU-Pv4" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="i4O-HU-Pv4" customClass="MainViewController" customModule="BlogReader" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xgQ-5d-YpQ"/>
                         <viewControllerLayoutGuide type="bottom" id="ZIX-4Y-plx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Zjf-nh-7Kv">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Featured" id="uSJ-F8-62x">
+                        <barButtonItem key="leftBarButtonItem" systemItem="organize" id="jOn-sX-gT6">
+                            <connections>
+                                <action selector="MenuOptionClicked:" destination="i4O-HU-Pv4" id="KaX-A0-RcL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SfE-nn-tRS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1053" y="644"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="qru-pu-hQe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2GH-X4-nQL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="alv-qR-B7G">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="i4O-HU-Pv4" kind="relationship" relationship="rootViewController" id="10c-Q3-SYZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XLE-Am-Oqb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="241" y="644"/>
         </scene>
