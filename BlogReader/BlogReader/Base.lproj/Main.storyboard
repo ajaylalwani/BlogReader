@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
-        <!--Featured-->
+        <!--Recent Posts-->
         <scene sceneID="TQN-D6-Arf">
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="i4O-HU-Pv4" customClass="MainViewController" customModule="BlogReader" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,7 +19,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Featured" id="uSJ-F8-62x">
+                    <navigationItem key="navigationItem" title="Recent Posts" id="uSJ-F8-62x">
                         <barButtonItem key="leftBarButtonItem" systemItem="organize" id="jOn-sX-gT6">
                             <connections>
                                 <action selector="MenuOptionClicked:" destination="i4O-HU-Pv4" id="KaX-A0-RcL"/>

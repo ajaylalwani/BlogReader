@@ -23,7 +23,7 @@ class MainViewController: UIViewController{
         self.view.addSubview(scrollViewHelper);
         scrollViewHelper.reloadViews();
         
-        //self.connectionHelper.downloadCategories();
+        self.connectionHelper.downloadPosts();
     }
 
     override func didReceiveMemoryWarning() {

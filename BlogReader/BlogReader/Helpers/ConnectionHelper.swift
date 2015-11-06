@@ -10,6 +10,7 @@ import UIKit
 
 let BASE_URL = "https://public-api.wordpress.com/rest/v1.1/sites/48447328/";
 let MENU_ITEM_URI = "categories";
+let POSTS_URI = "posts";
 
 let parsingHelper = ParsingHelper();
 
@@ -22,6 +23,19 @@ class ConnectionHelper: NSObject {
             (data, response, error) in
             
             parsingHelper.parseCategories(data!);
+            
+        });
+        
+        task.resume();
+    }
+    
+    func downloadPosts() {
+        let session = NSURLSession.sharedSession();
+        
+        let task = session.dataTaskWithURL(NSURL(string: BASE_URL + POSTS_URI)!, completionHandler: {
+            (data, response, error) in
+            
+            parsingHelper.parsePosts(data!);
             
         });
         

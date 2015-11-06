@@ -38,7 +38,7 @@ class ScrollViewHelper: UIView {
     
     func reloadViews() {
     
-        let totalNumberOfElements = 6;
+        let totalNumberOfElements = 20;
         var contentView: UIView;
 
         var totalElementsAdded = 0;
@@ -86,7 +86,7 @@ class ScrollViewHelper: UIView {
         // Add Image
         let imageView = UIImageView(frame: CGRectMake(CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(frame) - CGFloat(2 * PADDING), CGRectGetHeight(frame) - CGFloat(2 * PADDING)))
         imageView.backgroundColor = UIColor.whiteColor();
-        imageView.image = UIImage(named: "Heena");
+        //imageView.image = UIImage(named: "Heena");
         imageView.contentMode = UIViewContentMode.ScaleAspectFill;
         imageView.clipsToBounds = true;
         
