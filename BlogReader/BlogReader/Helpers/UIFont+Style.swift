@@ -11,11 +11,11 @@ import UIKit
 extension UIFont {
     
     class var fontForBlogHeader: UIFont {
-        return UIFont(name: "Avenir-Book", size: 50)!;
+        return UIFont(name: "Avenir-Book", size: 25)!;
     }
     
     class var fontForBlogText: UIFont {
-        return UIFont(name: "Avenir-Light", size: 20)!;
+        return UIFont(name: "Avenir-Light", size: 15)!;
     }
     
 }

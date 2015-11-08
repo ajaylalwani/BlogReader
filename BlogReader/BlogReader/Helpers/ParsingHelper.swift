@@ -21,8 +21,16 @@ let POST_ATTACHMENT_KEY = "attachments";
 let POST_THUMBNAILS_KEY = "thumbnails";
 let POST_THUMBNAIL_KEY = "thumbnail";
 
+
+protocol ParsingHelperDelegate {
+    
+    func parsingHelper(parsingHelper: ParsingHelper, didParsePost post: RecentPosts);
+}
+
+
 class ParsingHelper: NSObject {
     
+    var delegate: ParsingHelperDelegate?
     
     func parseCategories(data: NSData) {
         do {
@@ -56,7 +64,7 @@ class ParsingHelper: NSObject {
             var postThumbnails: NSDictionary;
             var postThumbnailURL: String;
             var postImages: Array<String>;
-            var recentPost: RecentPosts;
+            var recentPost = RecentPosts();
             
             for i in 0...allPosts.count - 1 {
                 
@@ -80,6 +88,10 @@ class ParsingHelper: NSObject {
                     postImages.append(postThumbnailURL);
                 }
                 recentPost.postAttachments = postImages;
+                
+                dispatch_sync(dispatch_get_main_queue(), {
+                    self.delegate?.parsingHelper(self, didParsePost: recentPost);
+                })
             }
             
         } catch {

@@ -12,9 +12,23 @@ let BASE_URL = "https://public-api.wordpress.com/rest/v1.1/sites/48447328/";
 let MENU_ITEM_URI = "categories";
 let POSTS_URI = "posts";
 
-let parsingHelper = ParsingHelper();
+protocol ConnectionHelperDelegate {
+    
+    func connectionHelper(connectionHelper: ConnectionHelper, didDownloadPost post: RecentPosts);
+}
 
-class ConnectionHelper: NSObject {
+
+
+class ConnectionHelper: NSObject, ParsingHelperDelegate {
+    
+    var delegate:ConnectionHelperDelegate?;
+    let parsingHelper = ParsingHelper();
+    
+    override init() {
+        super.init();
+        self.parsingHelper.delegate = self;
+    }
+    
     
     func downloadCategories() {
         let session = NSURLSession.sharedSession();
@@ -22,7 +36,7 @@ class ConnectionHelper: NSObject {
         let task = session.dataTaskWithURL(NSURL(string: BASE_URL + MENU_ITEM_URI)!, completionHandler: {
             (data, response, error) in
             
-            parsingHelper.parseCategories(data!);
+            self.parsingHelper.parseCategories(data!);
             
         });
         
@@ -35,11 +49,16 @@ class ConnectionHelper: NSObject {
         let task = session.dataTaskWithURL(NSURL(string: BASE_URL + POSTS_URI)!, completionHandler: {
             (data, response, error) in
             
-            parsingHelper.parsePosts(data!);
+            self.parsingHelper.parsePosts(data!);
             
         });
         
         task.resume();
+    }
+    
+    //MARK:- ParsingHelperDelegate
+    func parsingHelper(parsingHelper: ParsingHelper, didParsePost post: RecentPosts) {
+        self.delegate?.connectionHelper(self, didDownloadPost: post);
     }
 
 }

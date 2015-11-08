@@ -8,12 +8,25 @@
 
 import UIKit
 
-class ScrollViewHelper: UIView {
 
+protocol ScrollViewHelperDatasource {
+    
+    func numberOfItemsInScrollView(scrollViewHelper: ScrollViewHelper) -> Int;
+    
+    func postForItemAtIndex(scrollViewHelper: ScrollViewHelper, index: Int) -> RecentPosts;
+}
+
+
+class ScrollViewHelper: UIView {
+    
     let PADDING = 20;
     
     var scrollView = UIScrollView();
     var scrollViewFrame = CGRectZero;
+    var datasource: ScrollViewHelperDatasource?
+    var totalElementsAdded = 0;
+    var currentPage = 0;
+    var layoutFlag = true;
     
     override init(frame: CGRect) {
         scrollViewFrame = frame;
@@ -22,7 +35,7 @@ class ScrollViewHelper: UIView {
         super.init(frame: frame);
         self.addSubview(self.scrollView);
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
     }
@@ -32,54 +45,80 @@ class ScrollViewHelper: UIView {
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func drawRect(rect: CGRect) {
-        // Drawing code
+    // Drawing code
     }
     */
     
     func reloadViews() {
-    
-        let totalNumberOfElements = 20;
-        var contentView: UIView;
-
-        var totalElementsAdded = 0;
+        
+        let totalNumberOfElements = (self.datasource?.numberOfItemsInScrollView(self))!;
+        totalElementsAdded = 0;
+        
+        if totalNumberOfElements < 1 {
+            return;
+        }
+        
+        self.scrollView.subviews.forEach({ $0.removeFromSuperview() });
+        
+        self.backgroundColor = UIColor.colorForScrollViewBackground;
         
         let totalPages = totalNumberOfElements/2 + 1;
         
-        self.scrollView.contentSize = CGSizeMake(CGFloat(totalPages) * CGRectGetWidth(self.scrollView.bounds), CGRectGetHeight(self.scrollView.bounds));
-        self.backgroundColor = UIColor.colorForScrollViewBackground;
+        for (var i = 0; i < totalPages; i++) {
+            
+            addItemAtIndex(i);
+            
+        }
+        
+    }
+    
+    func addItemAtIndex(i: Int) {
+        
+        var contentView: UIView;
+        var post: RecentPosts?;
         
         let totalHeightOfContent = CGRectGetHeight(self.scrollView.bounds) - CGFloat(5 * PADDING);
         
-        for (var i = 0; i < totalPages; i++) {
+        let totalNumberOfElements = (self.datasource?.numberOfItemsInScrollView(self))!;
+        let totalPages = totalNumberOfElements/2 + 1;
+        
+        self.scrollView.contentSize = CGSizeMake(CGFloat(totalPages) * CGRectGetWidth(self.scrollView.bounds), CGRectGetHeight(self.scrollView.bounds));
+        
+        if i == 0 {
+            post = self.datasource?.postForItemAtIndex(self, index: totalElementsAdded);
             
-            if i == 0 {
-                contentView = createContentViewWithFrame(CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING), totalHeightOfContent));
+            contentView = createContentViewWithFrame(CGRectMake(CGFloat(currentPage) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING), totalHeightOfContent), andPost: post!);
+            contentView.backgroundColor = UIColor.colorForScrollViewCards;
+            
+            self.scrollView.addSubview(contentView);
+            totalElementsAdded++;
+            currentPage++;
+            
+        } else {
+            
+            if layoutFlag {
+                post = self.datasource?.postForItemAtIndex(self, index: totalElementsAdded);
+                contentView = createContentViewWithFrame(CGRectMake(CGFloat(currentPage) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING),totalHeightOfContent/2 - CGFloat(0.5) * CGFloat(PADDING)), andPost: post!);
                 contentView.backgroundColor = UIColor.colorForScrollViewCards;
                 
                 self.scrollView.addSubview(contentView);
                 totalElementsAdded++;
-                
+                layoutFlag = !layoutFlag;
             } else {
-                    contentView = createContentViewWithFrame(CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING),totalHeightOfContent/2 - CGFloat(0.5) * CGFloat(PADDING)));
-                    contentView.backgroundColor = UIColor.colorForScrollViewCards;
                 
-                    self.scrollView.addSubview(contentView);
+                post = self.datasource?.postForItemAtIndex(self, index: totalElementsAdded);
+                contentView = createContentViewWithFrame(CGRectMake(CGFloat(currentPage) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), totalHeightOfContent/2 + CGFloat(1.5) * CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING), totalHeightOfContent/2 - CGFloat(PADDING)), andPost: post!);
+                contentView.backgroundColor = UIColor.colorForScrollViewCards;
+                
+                self.scrollView.addSubview(contentView);
                 totalElementsAdded++;
-                
-                if totalElementsAdded + 1 < totalNumberOfElements  {
-                    contentView = createContentViewWithFrame(CGRectMake(CGFloat(i) * CGRectGetWidth(self.scrollView.bounds) + CGFloat(PADDING), totalHeightOfContent/2 + CGFloat(1.5) * CGFloat(PADDING), CGRectGetWidth(self.scrollView.bounds) - CGFloat(2 * PADDING), totalHeightOfContent/2 - CGFloat(PADDING)));
-                    contentView.backgroundColor = UIColor.colorForScrollViewCards;
-                    
-                    self.scrollView.addSubview(contentView);
-                    totalElementsAdded++;
-                }
+                layoutFlag = !layoutFlag;
+                currentPage++;
             }
         }
-
     }
     
-    
-    func createContentViewWithFrame(frame: CGRect) -> UIView {
+    func createContentViewWithFrame(frame: CGRect, andPost post: RecentPosts) -> UIView {
         let contentView = UIView(frame: frame);
         contentView.backgroundColor = UIColor.colorForScrollViewCards;
         
@@ -100,17 +139,20 @@ class ScrollViewHelper: UIView {
         let metaView = UIView(frame: overlayView.frame);
         
         // Title
-        let lblTitle = UILabel(frame: CGRectMake(0,10, CGRectGetWidth(metaView.bounds), 50));
-        lblTitle.text = "The feels of Istanbul";
+        let lblTitle = UILabel(frame: CGRectMake(0,10, CGRectGetWidth(metaView.bounds), 30));
+        lblTitle.text = post.title!.html2String;
         lblTitle.textColor = UIColor.whiteColor();
         lblTitle.textAlignment = NSTextAlignment.Center;
         lblTitle.font = UIFont.fontForBlogHeader;
-    
+        
         // Partial Content
-        let lblContent = UILabel(frame: CGRectMake(30,70, CGRectGetWidth(metaView.bounds) - 60, 90));
+        let lblContent = UILabel(frame: CGRectMake(30,40, CGRectGetWidth(metaView.bounds) - 60, 90));
         
         //300 Characters maximum
-        lblContent.text = "\"The moment’s one of a kind, 39ft above the ground, smack right in the middle of the sky, there’s a picture so perfect that it breaks your heart, in a good way. Seeing the twilight blue horizons blazing in the background, disappearing into a sky full of stars, shining like the perfect little trinkets ...";
+        let postContent = post.content?.html2String;
+        let index = postContent!.startIndex.advancedBy(300);
+        let finalPostContent = postContent!.substringToIndex(index);
+        lblContent.text = "\(finalPostContent)...";
         
         lblContent.textColor = UIColor.whiteColor();
         lblContent.font = UIFont.fontForBlogText;
@@ -125,7 +167,7 @@ class ScrollViewHelper: UIView {
         contentView.addSubview(metaView);
         
         return contentView;
-
+        
     }
-
+    
 }

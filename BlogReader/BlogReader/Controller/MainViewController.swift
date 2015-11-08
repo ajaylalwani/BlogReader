@@ -8,9 +8,12 @@
 
 import UIKit
 
-class MainViewController: UIViewController{
+class MainViewController: UIViewController, ConnectionHelperDelegate, ScrollViewHelperDatasource {
 
     let connectionHelper = ConnectionHelper();
+    var scrollViewHelper: ScrollViewHelper?;
+    
+    var posts = Array<RecentPosts>();
     
     @IBOutlet weak var sideMenu: UITableView!
     
@@ -19,10 +22,12 @@ class MainViewController: UIViewController{
 
         // Do any additional setup after loading the view.
 
-        let scrollViewHelper = ScrollViewHelper(frame: self.view.bounds);
-        self.view.addSubview(scrollViewHelper);
-        scrollViewHelper.reloadViews();
+        scrollViewHelper = ScrollViewHelper(frame: self.view.bounds);
+        self.view.addSubview(scrollViewHelper!);
+        scrollViewHelper!.datasource = self;
+        scrollViewHelper!.reloadViews();
         
+        self.connectionHelper.delegate = self;
         self.connectionHelper.downloadPosts();
     }
 
@@ -45,6 +50,22 @@ class MainViewController: UIViewController{
     
     
     @IBAction func MenuOptionClicked(sender: UIBarButtonItem) {
+    }
+    
+    
+    //MARK:- ConnectionHelperDelegate
+    func connectionHelper(connectionHelper: ConnectionHelper, didDownloadPost post: RecentPosts) {
+        posts.append(post);
+        self.scrollViewHelper!.addItemAtIndex(self.posts.count - 1);
+    }
+    
+    //MARK: - ScrollViewHelperDatasource
+    func numberOfItemsInScrollView(scrollViewHelper: ScrollViewHelper) -> Int {
+        return posts.count;
+    }
+    
+    func postForItemAtIndex(scrollViewHelper: ScrollViewHelper, index: Int) -> RecentPosts {
+        return self.posts[index];
     }
 
 }

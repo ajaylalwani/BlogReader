@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C174C8F1BEFBDD20029B198 /* String+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C174C8E1BEFBDD20029B198 /* String+Util.swift */; settings = {ASSET_TAGS = (); }; };
 		6E0B8E811BD93F260083F874 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B8E801BD93F260083F874 /* AppDelegate.swift */; };
 		6E0B8E861BD93F260083F874 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E0B8E841BD93F260083F874 /* Main.storyboard */; };
 		6E0B8E891BD93F260083F874 /* BlogReader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E0B8E871BD93F260083F874 /* BlogReader.xcdatamodeld */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C174C8E1BEFBDD20029B198 /* String+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Util.swift"; path = "Helpers/String+Util.swift"; sourceTree = "<group>"; };
 		6E0B8E7D1BD93F260083F874 /* BlogReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlogReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0B8E801BD93F260083F874 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E0B8E851BD93F260083F874 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				6E8DFFD81BE93FF500BED3EE /* ScrollViewHelper.swift */,
 				6E8DFFDA1BE94FE000BED3EE /* UIColor+Style.swift */,
 				6ED53CE51BED1CA800DDD709 /* UIFont+Style.swift */,
+				3C174C8E1BEFBDD20029B198 /* String+Util.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				6E7C940D1BDE71E8007CCBF7 /* ConnectionHelper.swift in Sources */,
 				6E7C94191BDEA735007CCBF7 /* Category.swift in Sources */,
 				6ED53CE61BED1CA800DDD709 /* UIFont+Style.swift in Sources */,
+				3C174C8F1BEFBDD20029B198 /* String+Util.swift in Sources */,
 				6E8DFFDB1BE94FE000BED3EE /* UIColor+Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
