@@ -54,49 +54,57 @@ class ParsingHelper: NSObject {
     }
     
     func parsePosts(data: NSData) {
-        do {
-            let posts = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary;
-            let allPosts = posts["posts"] as! NSArray;
+        
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
-            var post: NSDictionary;
-            var postID: Int;
-            var postAttachments: NSDictionary;
-            var postThumbnails: NSDictionary;
-            var postThumbnailURL: String;
-            var postImages: Array<String>;
-            var recentPost = RecentPosts();
-            
-            for i in 0...allPosts.count - 1 {
+            do {
                 
-                recentPost = RecentPosts();
-                postImages = Array<String>();
+                let posts = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary;
+                let allPosts = posts["posts"] as! NSArray;
                 
-                post = allPosts[i] as! NSDictionary;
-                postID = post[POST_ID_KEY] as! Int;
-                postAttachments = post[POST_ATTACHMENT_KEY] as! NSDictionary;
-
-                recentPost.id = postID;
-                recentPost.content = post[POST_CONTENT_KEY] as! String;
-                recentPost.title = post[POST_TITLE_KEY] as! String;
+                var post: NSDictionary;
+                var postID: Int;
+                var postAttachments: NSDictionary;
+                var postThumbnails: NSDictionary;
+                var postThumbnailURL: String;
+                var postImages: Array<String>;
+                var recentPost = RecentPosts();
                 
-                for attachmentId in postAttachments.allKeys {
+                for i in 0...allPosts.count - 1 {
                     
-                    postThumbnails = postAttachments[attachmentId as! String] as! NSDictionary;
-                    postThumbnails = postThumbnails[POST_THUMBNAILS_KEY] as! NSDictionary;
-                    postThumbnailURL = postThumbnails[POST_THUMBNAIL_KEY] as! String;
+                    recentPost = RecentPosts();
+                    postImages = Array<String>();
                     
-                    postImages.append(postThumbnailURL);
+                    post = allPosts[i] as! NSDictionary;
+                    postID = post[POST_ID_KEY] as! Int;
+                    postAttachments = post[POST_ATTACHMENT_KEY] as! NSDictionary;
+                    
+                    recentPost.id = postID;
+                    recentPost.content = post[POST_CONTENT_KEY] as! String;
+                    recentPost.title = post[POST_TITLE_KEY] as! String;
+                    
+                    for attachmentId in postAttachments.allKeys {
+                        
+                        postThumbnails = postAttachments[attachmentId as! String] as! NSDictionary;
+                        postThumbnails = postThumbnails[POST_THUMBNAILS_KEY] as! NSDictionary;
+                        postThumbnailURL = postThumbnails[POST_THUMBNAIL_KEY] as! String;
+                        
+                        postImages.append(postThumbnailURL);
+                    }
+                    recentPost.postAttachments = postImages;
+                    
+                    dispatch_sync(dispatch_get_main_queue(), {
+                        self.delegate?.parsingHelper(self, didParsePost: recentPost);
+                    });
                 }
-                recentPost.postAttachments = postImages;
                 
-                dispatch_sync(dispatch_get_main_queue(), {
-                    self.delegate?.parsingHelper(self, didParsePost: recentPost);
-                })
+            } catch {
+                
             }
-            
-        } catch {
-            
-        }
+        });
+        
+        
     }
-
+    
 }
